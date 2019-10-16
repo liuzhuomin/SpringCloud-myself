@@ -1,0 +1,62 @@
+package xinrui.cloud.domain.dto;
+
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import xinrui.cloud.common.utils.BeanUtilsEchance;
+import xinrui.cloud.domain.IdEntity;
+import xinrui.cloud.domain.TechnologyFinancial;
+import xinrui.cloud.domain.TechnologyLoanType;
+
+import java.util.List;
+
+@ApiModel("科技金融产品审核列表对象")
+@Data
+public class TechnologyFinancialGovDto extends IdEntity {
+
+    @ApiModelProperty(value = "科技金融产品名称", position = 1)
+    private String name;
+
+    @ApiModelProperty(value = "展示的图片", position = 2)
+    private String viewImage;
+
+    @ApiModelProperty(value = "科技金融类别，只可能为 信用贷/抵押贷", position = 3)
+    private String category;
+
+    @ApiModelProperty(value = "产品标语", position = 4)
+    private String slogan;
+
+    @ApiModelProperty(value = "申请发布时间", position = 5)
+    private String publicDate;
+
+    @ApiModelProperty(value = "申请结束时间", position = 6)
+    private String applyEndDate;
+
+    @ApiModelProperty(value = "最高贷款金额", position = 7)
+    private String amount;
+
+    @ApiModelProperty(value = "抵押物件(价证券/票据/股票等)", position = 8)
+    private String loanTypes;
+
+
+    public static List<TechnologyFinancialGovDto> copy(List<TechnologyFinancial> source) {
+        return BeanUtilsEchance.copyList(source, TechnologyFinancialGovDto.class, new BeanUtilsEchance.CopyListFilter<TechnologyFinancialGovDto>() {
+            @Override
+            public void copy(Object source, TechnologyFinancialGovDto target) {
+                TechnologyFinancial technologyFinancial = (TechnologyFinancial) source;
+                BeanUtilsEchance.copyDateFiledEnhance(technologyFinancial, target,
+                        "loanTypes", "amount");
+                target.setAmount(technologyFinancial.getLoanAmount().getFullAmount());
+                target.setViewImage(technologyFinancial.getViewImages().get(0).getFullPath());
+
+                List<TechnologyLoanType> technologyLoanTypes = technologyFinancial.getTechnologyLoanTypes();
+                StringBuilder builder = TechnologyLoanTypeDto.getStringBuilder(technologyLoanTypes);
+                target.setLoanTypes(builder.toString());
+            }
+
+        });
+    }
+
+
+}

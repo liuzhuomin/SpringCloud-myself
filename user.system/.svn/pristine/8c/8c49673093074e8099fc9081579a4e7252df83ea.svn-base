@@ -1,0 +1,34 @@
+package liuzhuomin.cloud;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+
+@SpringBootApplication
+@ComponentScan(value = {"liuzhuomin.cloud"})
+@EntityScan(value = "liuzhuomin.cloud")
+@EnableCaching                //缓存支持
+//@EnableDiscoveryClient        //发现服务
+//@EnableFeignClients({ "liuzhuomin.cloud" })   //注册服务
+//@EnableCircuitBreaker     //熔断支持
+//@EnableAspectJAutoProxy(exposeProxy = true)
+@SuppressWarnings({"unused"})
+public class ApplicationPolicyMatching {
+
+    /**
+     * http://localhost:8280/swagger-ui.html/   项目的api地址，需要本地运行
+     * 主要实现政策匹配功能模块，包含企业端和政府端
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+//        ConfigurableApplicationContext context =
+//                new SpringApplicationBuilder(ApplicationPolicyMatching.class).properties("spring.config.location=classpath:/application.properties").run(args);
+        SpringApplication.run(ApplicationPolicyMatching.class, args);
+    }
+}
+

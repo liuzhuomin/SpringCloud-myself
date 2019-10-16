@@ -1,0 +1,78 @@
+package liuzhuomin.cloud.config;
+
+import liuzhuomin.cloud.dto.ResultDto;
+import org.apache.log4j.Logger;
+import org.springframework.core.MethodParameter;
+import org.springframework.http.MediaType;
+import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+/**
+ *
+ * <B>Title:</B>ResultDto.java</br>
+ * <B>Description:</B> 针对于RestController的异常处理 </br>
+ * <B>Copyright: </B>Copyright (c) 2019 </br>
+ *
+ * @author liuliuliu
+ * @date 2019年3月27日
+ * @version 1.0
+ */
+@SuppressWarnings("rawtypes")
+@RestControllerAdvice
+public class SpringExceptionHandle implements ResponseBodyAdvice {
+
+    private final Logger LOGGER = Logger.getLogger(SpringExceptionHandle.class);
+
+    @Override
+    public boolean supports(MethodParameter returnType, Class converterType) {
+        return true;
+    }
+
+    /**
+     * 封装处理正常的controller(为了照顾swagger的api生成，所以未曾使用)
+     *
+     * @param body
+     * @param returnType
+     * @param selectedContentType
+     * @param selectedConverterType
+     * @param request
+     * @param response
+     * @return
+     */
+    @Override
+    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
+                                  Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+        return body;
+    }
+
+    @ExceptionHandler(Throwable.class)
+    public void handle(Throwable e, HttpServletResponse response) throws IOException {
+        throwException(e, response);
+    }
+    @ExceptionHandler(Exception.class)
+    public void handle(Exception e, HttpServletResponse response) throws IOException {
+        throwException(e, response);
+    }
+
+    private void throwException(Object e, HttpServletResponse response){
+        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        PrintWriter writer = null;
+        try {
+            writer = response.getWriter();
+            writer.println(ResultDto.error(e));
+            writer.flush();
+        } catch (IOException t) {
+            LOGGER.trace(e);
+        }finally {
+            writer.close();
+        }
+    }
+
+}

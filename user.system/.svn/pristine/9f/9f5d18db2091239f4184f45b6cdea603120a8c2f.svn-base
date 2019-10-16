@@ -1,0 +1,53 @@
+package xinrui.cloud.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.netflix.zuul.filters.RouteLocator;
+
+//@Component
+//@EnableOAuth2Sso
+class LoginConfigurer
+       /* extends WebSecurityConfigurerAdapter*/ {
+
+    @Autowired
+    RouteLocator routeLocator;
+
+//    @Override
+//    public void configure(HttpSecurity http) throws Exception {
+//
+//        List<String> ignoreServer = Lists.newArrayList();
+//        for (Route route : routeLocator.getRoutes()) {
+//            System.err.println(route.getFullPath());
+//            ignoreServer.add(route.getFullPath());
+//        }
+//        http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authorizeRequests()
+//                .antMatchers(ignoreServer.toArray(new String[ignoreServer.size()])).permitAll()
+//                .anyRequest().authenticated();
+//    }
+
+//    private Filter csrfHeaderFilter() {
+//        return new OncePerRequestFilter() {
+//            @Override
+//            protected void doFilterInternal(HttpServletRequest request,
+//                                            HttpServletResponse response, FilterChain filterChain)
+//                    throws ServletException, IOException {
+//                CsrfToken csrf = (CsrfToken) request
+//                        .getAttribute(CsrfToken.class.getName());
+//                if (csrf != null) {
+//                    Cookie cookie = new Cookie("XSRF-TOKEN",
+//                            csrf.getToken());
+//                    cookie.setPath("/");
+//                    response.addCookie(cookie);
+//                }
+//                filterChain.doFilter(request, response);
+//            }
+//        };
+//    }
+//
+//    private CsrfTokenRepository csrfTokenRepository() {
+//        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+//        repository.setHeaderName("X-XSRF-TOKEN");
+//        return repository;
+//    }
+}

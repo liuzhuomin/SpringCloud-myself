@@ -1,0 +1,15 @@
+package xinrui.cloud.domain.dto;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import xinrui.cloud.domain.IdEntity;
+
+@ApiModel("申请条件数据传输对象")
+@Data
+public class TechnologyApplyConditionDto extends IdEntity {
+
+    @ApiModelProperty(value = "申请条件", position = 1)
+    private String conditions;
+
+}

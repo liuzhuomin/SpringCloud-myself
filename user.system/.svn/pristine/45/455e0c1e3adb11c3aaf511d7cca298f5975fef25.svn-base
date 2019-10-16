@@ -1,0 +1,45 @@
+package xinrui.cloud.domain.dto;
+
+import com.google.common.collect.Lists;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import org.springframework.util.CollectionUtils;
+import xinrui.cloud.domain.IdEntity;
+import xinrui.cloud.domain.TechnologyLoanAmount;
+import xinrui.cloud.domain.TechnologyLoanType;
+
+import javax.persistence.Entity;
+import java.util.List;
+
+
+@ApiModel("贷款额度数据传输对象")
+public class TechnologyLoanAmountDto extends IdEntity {
+
+    @ApiModelProperty(value = "贷款额度的文本值", position = 1)
+    private String fullAmount;
+
+    public TechnologyLoanAmountDto(String fullAmount) {
+        this.fullAmount = fullAmount;
+    }
+
+    public TechnologyLoanAmountDto() {
+    }
+
+    public static List<TechnologyLoanAmountDto> copy(List<TechnologyLoanAmount> source) {
+        List<TechnologyLoanAmountDto> results = Lists.newArrayList();
+        if (!CollectionUtils.isEmpty(source)) {
+            for (TechnologyLoanAmount t : source) {
+                results.add(new TechnologyLoanAmountDto(t.getFullAmount()));
+            }
+        }
+        return results;
+    }
+
+    public String getFullAmount() {
+        return fullAmount;
+    }
+
+    public void setFullAmount(String fullAmount) {
+        this.fullAmount = fullAmount;
+    }
+}

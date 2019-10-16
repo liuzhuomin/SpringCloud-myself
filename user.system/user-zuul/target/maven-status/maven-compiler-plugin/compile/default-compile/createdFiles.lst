@@ -1,0 +1,9 @@
+xinrui\cloud\filter\OptionsFilter.class
+xinrui\cloud\config\DocumentationConfig$1.class
+xinrui\cloud\ApplicationZuul.class
+xinrui\cloud\filter\AccessFilter.class
+xinrui\cloud\config\RestTemplateConfig.class
+xinrui\cloud\filter\FallBackProvider.class
+xinrui\cloud\filter\FallBackProvider$1.class
+xinrui\cloud\config\DocumentationConfig.class
+xinrui\cloud\filter\ErrorFilter.class

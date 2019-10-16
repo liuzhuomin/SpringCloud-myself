@@ -1,0 +1,29 @@
+package liuzhuomin.cloud.service;
+
+import liuzhuomin.cloud.dto.UserDto;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+/**
+ * <B>Title:</B>UserService</br>
+ * <B>Description:</B>  </br>
+ * <B>Copyright: </B>Copyright (c) 2019 </br>
+ *
+ * @author liuliuliu
+ * @version 1.0
+ * @date2019/6/26 20:48
+ */
+@FeignClient(value = "user-producers", path = "user", fallback = liuzhuomin.cloud.fallback.UserServiceFallBack.class)
+public interface UserService {
+
+    @LoadBalanced
+    @GetMapping("find/{username}")
+    public UserDto findUserByUserName(@PathVariable("username") String username);
+
+    @LoadBalanced
+    @GetMapping("find/by/{id}")
+    public UserDto findUserByUserId(@PathVariable("id") Long id);
+
+}

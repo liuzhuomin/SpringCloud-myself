@@ -1,0 +1,36 @@
+package liuzhuomin.cloud.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+
+/**
+ * <B>Title:</B>ResourceConfig</br>
+ * <B>Description:</B> 用于保护 OAuth2 要开放的资源，
+ * 同时主要作用于client端以及token的认证(Bearer Auth),并且可重写拦截请求的函数</br>
+ * <B>Copyright: </B>Copyright (c) 2019 </br>
+ *
+ * @author liuliuliu
+ * @version 1.0
+ * @date2019/6/26 14:28
+ */
+@Configuration
+@EnableResourceServer
+public class ResourceServerConfigurerEnhance extends ResourceServerConfigurerAdapter {
+
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+//        http.csrf().disable().authorizeRequests()
+//                .anyRequest().authenticated()
+//                .and()
+//                .authorizeRequests().antMatchers("/oauth/**","/user/**","/company/**").permitAll()
+//                .and().httpBasic();
+        http.csrf().disable();
+        //匹配所有的请求都需要USER权限
+        http.authorizeRequests().anyRequest();
+        http.authorizeRequests().antMatchers("/oauth/**", "/user/**", "/company/**").access("permitAll");
+        http.authorizeRequests().anyRequest().authenticated();
+        http.formLogin().and().httpBasic();
+    }
+}

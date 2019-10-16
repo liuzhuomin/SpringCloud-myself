@@ -1,0 +1,16 @@
+#spring.profiles.active=local
+eureka.client.fetch-registry=true
+eureka.client.register-with-eureka=true
+eureka.client.service-url.defaultZone=http://root:xinrui2017@134.175.204.243:8080/eureka
+
+#erureka configruation
+eureka.instance.hostname=userMag
+eureka.instance.ip-address=192.168.20.18
+eureka.instance.prefer-ip-address=true
+logging.level.org.springframework=INFO 
+#security
+security.basic.enabled=true
+security.user.name=root
+security.user.password=xinrui2017
+server.port=7100
+

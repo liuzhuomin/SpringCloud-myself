@@ -1,0 +1,11 @@
+package liuzhuomin.cloud.service.impl;
+
+import org.springframework.stereotype.Service;
+
+import liuzhuomin.cloud.domain.ProblemModel;
+import liuzhuomin.cloud.service.ProblemModelService;
+
+@Service
+public class ProblemModelServiceImpl extends BaseServiceImpl<ProblemModel> implements ProblemModelService {
+
+}

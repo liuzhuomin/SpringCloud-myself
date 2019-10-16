@@ -1,0 +1,23 @@
+package liuzhuomin.cloud.service;
+
+import liuzhuomin.cloud.domain.Organization;
+import liuzhuomin.cloud.dto.OtherGroupDto;
+
+/**
+ * <B>Title:</B>OrganizationService</br>
+ * <B>Description:</B> 组织机构service，用于获取组织相关信息 </br>
+ * <B>Copyright: </B>Copyright (c) 2019 </br>
+ *
+ * @author liuliuliu
+ * @version 1.0
+ * @date2019/7/3 9:40
+ */
+public interface OrganizationService extends BaseService<Organization> {
+
+    /**
+     * 通过企业名称获取企业组织数据传输对象{@link OtherGroupDto}
+     * @param name  企业名称
+     * @return  {@link OtherGroupDto}
+     */
+    OtherGroupDto findByCompanyName(String name);
+}

@@ -1,0 +1,23 @@
+package liuzhuomin.cloud.service;
+
+import liuzhuomin.cloud.dto.PageDto;
+import liuzhuomin.cloud.dto.ResultDto;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+
+@Component
+@FeignClient(name = "carrier", path = "carrier", fallback = liuzhuomin.cloud.fallback.CarrierClientFallBack.class)
+public interface CarrierClientService {
+
+    @GetMapping("getCarrierById")
+    public ResultDto<?> getCarrierById(@RequestParam(name = "id") Long id);
+
+    @LoadBalanced
+    @GetMapping("getAllRecommendCarrier")
+    public ResultDto<List<?>> getAllRecommendCarrier();
+}

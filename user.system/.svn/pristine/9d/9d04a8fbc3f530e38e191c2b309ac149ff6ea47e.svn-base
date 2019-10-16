@@ -1,0 +1,141 @@
+package xinrui.cloud.service;
+
+import xinrui.cloud.compoment.Application;
+import xinrui.cloud.domain.TechnologyFinancial;
+import xinrui.cloud.domain.dto.*;
+import xinrui.cloud.domain.vto.TechnologyFinancialVto;
+import xinrui.cloud.dto.PageDto;
+
+import java.util.List;
+
+/**
+ * 科技金融接口
+ */
+public interface TechnologyFinancialService extends BaseService<TechnologyFinancial> {
+
+    /**
+     * 获取贷款期限列表
+     *
+     * @return {@link TechnologyLoanDateDto}
+     */
+    List<TechnologyLoanDateDto> dates();
+
+    /**
+     * 获取贷款类型列表
+     *
+     * @return {@link TechnologyLoanTypeDto}
+     */
+    List<TechnologyLoanTypeDto> types();
+
+    /**
+     * 获取贷款额度列表
+     *
+     * @return {@link TechnologyLoanAmountDto}
+     */
+    List<TechnologyLoanAmountDto> amounts();
+
+    /**
+     * 保存科技金融产品
+     *
+     * @param technologyFinancialVto
+     * @return
+     */
+    TechnologyFinancialDto saveByDto(TechnologyFinancialVto technologyFinancialVto);
+
+    /**
+     * 根据科技金融产品发布草稿箱中的产品，并且返回新的草稿箱列表
+     *
+     * @param id {@link TechnologyFinancial#getId()}
+     * @return {@code List<TechnologyFinancialDto>}
+     */
+    List<TechnologyFinancialDto> publicById(Long id);
+
+    /**
+     * 根据传递过来的status参数获取不同的科技金融列表，status状态为 1、2、3
+     * <ul>
+     * <li/>1.获取草稿箱列表,获取的是{@link TechnologyFinancial#getPublicAble()}为false的所有{@link TechnologyFinancial}对象
+     * <li/>2.获取审核产品列表，获取的是{@link TechnologyFinancial#getPublicAble()}为true的所有{@link TechnologyFinancial}对象
+     * <li/>3.获取上线产品列表
+     * </ul>
+     *
+     * @return {@code  List<TechnologyFinancialDto>}
+     */
+//    List<TechnologyFinancialDto> list(int status);
+
+    /**
+     * <p/>获取草稿箱列表,获取的是{@link TechnologyFinancial#getStatus()}为
+     * {@link TechnologyFinancial.TechnologyStatus#APPLYING}的所有{@link TechnologyFinancial}对象
+     *
+     * @return {@code  List<TechnologyFinancialDto>}
+     */
+    List<TechnologyFinancialDto> drafts();
+
+    /**
+     * <p/>获取上线产品列表,获取的是{@link TechnologyFinancial#getStatus()}为
+     * {@link TechnologyFinancial.TechnologyStatus#ONLINE}的所有{@link TechnologyFinancial}对象
+     *
+     * @return {@link TechnologyFinancialOnlineDto}
+     */
+    TechnologyFinancialOnlineDto onlines();
+
+    /**
+     * <p/>根据status获取(包含审核中(待审核)或者审核被拒绝的)当前用户的产品列表,获取的是{@link TechnologyFinancial#getStatus()}为
+     * {@link TechnologyFinancial.TechnologyStatus#APPLYING}，{@link TechnologyFinancial.TechnologyStatus#REFUSED}并且
+     * {@link TechnologyFinancial#getUserId()}等于当前用户id的{@link Application#getCurrentUser()#getId()}
+     * 的所有{@link TechnologyFinancial}对象
+     *
+     * @return {@link TechnologyFinalAuditDto}
+     */
+    TechnologyFinalAuditDto audits();
+
+    /**
+     * <p/>根据status获取审核的产品列表(包含审核中(待审核)或者审核通过的),获取的是{@link TechnologyFinancial#getStatus()}为
+     * {@link TechnologyFinancial.TechnologyStatus#APPLYING}，{@link TechnologyFinancial.TechnologyStatus#ONLINE}
+     * 的所有{@link TechnologyFinancial}对象
+     *
+     * @param status      当前状态值 1.查询待审核的，3查询通过的
+     * @param bank        所选银行
+     * @param currentPage 当前页码
+     * @param pageSize    一页大小
+     * @return {@link PageDto <List<TechnologyFinancialDto>> }
+     */
+    PageDto<List<TechnologyFinancialGovDto>> audits(int status, String bank, int currentPage, int pageSize);
+
+    /**
+     * 根据产品id和状态值审核产品
+     *
+     * @param id     {@link TechnologyFinancial#getId()}
+     * @param status {@link TechnologyFinancial.TechnologyStatus }
+     * @param reason 只有当传入的status为{@link TechnologyFinancial.TechnologyStatus#REFUSED }时才需要这个参数
+     */
+    void audit(int id, TechnologyFinancial.TechnologyStatus status, String reason);
+
+    /**
+     * 企业用户预约金融产品
+     *
+     * @param id   {@link TechnologyFinancial#getId()}
+     * @param user {@link TechnologyFinancialUserDto}
+     */
+    void appointment(int id, TechnologyFinancialUserDto user);
+
+    /**
+     * 根据筛选条件取所有线上的金融产品
+     *
+     * @param amount      最高贷款额度
+     * @param limit       期限
+     * @param category    类别,详情为{@link TechnologyFinancial.TechnologyType#values()}
+     * @param name        金融产品名称
+     * @param currentPage 当前页码
+     * @param pageSize    一页大小
+     * @return
+     */
+    PageDto<List<TechnologyFinancialBaseInfoDto>> onlines(int amount, int limit, String category, String name, int currentPage, int pageSize);
+
+    /**
+     * 根据科技金融产品的id获取{@link TechnologyFinancialDto}对象
+     *
+     * @param id {@link TechnologyFinancial#getId()}
+     * @return {@link TechnologyFinancialDto}
+     */
+    TechnologyFinancialDto findDtoById(Long id);
+}

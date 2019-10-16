@@ -1,0 +1,8 @@
+xinrui\cloud\app\HibernateEntitymanngerEvent.class
+xinrui\cloud\dao\impl\BaseDaoImpl.class
+xinrui\cloud\app\HibernateObservable.class
+xinrui\cloud\app\MyApplication.class
+xinrui\cloud\service\impl\BaseServiceImpl.class
+xinrui\cloud\service\BaseService.class
+xinrui\cloud\app\HibernateObserver.class
+xinrui\cloud\dao\BaseDao.class

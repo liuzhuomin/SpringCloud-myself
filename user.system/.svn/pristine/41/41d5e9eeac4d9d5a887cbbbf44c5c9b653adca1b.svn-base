@@ -1,0 +1,170 @@
+package xinrui.cloud.domain.dto;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import org.apache.commons.beanutils.MethodUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
+import xinrui.cloud.BootException;
+import xinrui.cloud.common.utils.DateUtil;
+import xinrui.cloud.domain.*;
+import xinrui.cloud.util.DataUtil;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
+
+@Data
+@ApiModel("科技金融核心对象")
+public class TechnologyFinancialDto extends IdEntity {
+
+    @ApiModelProperty(value = "科技金融产品名称", position = 1)
+    private String name;
+
+    @ApiModelProperty(value = "展示的图片", position = 2)
+    private List<TechnologyFinancialFileDto> viewImages;
+
+    @ApiModelProperty(value = "科技金融类别，只可能为 信用贷/抵押贷", position = 3)
+    private String category;
+
+    @ApiModelProperty(value = "产品标语", position = 4)
+    private String slogan;
+
+    @ApiModelProperty(value = "产品简介信息", position = 5)
+    private String information;
+
+    @ApiModelProperty(value = "贷款期限对象", position = 6)
+    private TechnologyLoanDateDto loanTimeLimit;
+
+    @ApiModelProperty(value = "贷款可抵押物件", position = 7)
+    private List<TechnologyLoanTypeDto> technologyLoanTypes;
+
+    @ApiModelProperty(value = "申请结束时间", position = 8)
+    private String applyEndDate;
+
+    @ApiModelProperty(value = "贷款额度对象", position = 9)
+    private TechnologyLoanAmountDto loanAmount;
+
+    @ApiModelProperty(value = "申请条件对象集合", position = 10)
+    private List<TechnologyApplyConditionDto> technologyApplyConditions;
+
+    @ApiModelProperty(value = "创建时间", position = 11)
+    private String createDate;
+
+    @ApiModelProperty(value = "问题对象", position = 12)
+    private List<TechnologyUsualProblemDto> technologyUsualProblems;
+
+    @ApiModelProperty(value = "办理流程对象集合", position = 13)
+    private List<TechnologyProcessDto> technologyProcesses;
+
+
+    public static TechnologyFinancialDto copy(TechnologyFinancial technologyFinancial) {
+        TechnologyFinancialDto dto = new TechnologyFinancialDto();
+        BeanUtils.copyProperties(technologyFinancial, dto, "viewImages", "loanTimeLimit"
+                , "loanAmount", "technologyApplyConditions", "technologyUsualProblems", "technologyProcesses", "createDate", "applyEndDate","technologyFinancialUsers","technologyLoanTypes");
+        dto.setViewImages(copyList(technologyFinancial.getViewImages(), TechnologyFinancialFileDto.class));
+        dto.setLoanTimeLimit(TechnologyLoanDateDto.copy(technologyFinancial.getLoanTimeLimit()));
+        dto.setLoanAmount(TechnologyLoanAmountDto.copy(technologyFinancial.getLoanAmount()));
+        dto.setTechnologyApplyConditions(copyList(technologyFinancial.getTechnologyApplyConditions(), TechnologyApplyConditionDto.class));
+        dto.setTechnologyUsualProblems(copyList(technologyFinancial.getTechnologyUsualProblems(), TechnologyUsualProblemDto.class));
+        dto.setTechnologyProcesses(copyList(technologyFinancial.getTechnologyProcesses(), TechnologyProcessDto.class));
+        dto.setTechnologyLoanTypes(copyList(technologyFinancial.getTechnologyLoanTypes(), TechnologyLoanTypeDto.class));
+        copyDateFiled(technologyFinancial, dto);
+        return dto;
+    }
+
+    public static List<TechnologyFinancialDto> copy(List<TechnologyFinancial> technologyFinancials) {
+        List<TechnologyFinancialDto> result = Lists.newArrayList();
+        if (!CollectionUtils.isEmpty(technologyFinancials)) {
+            for (TechnologyFinancial technologyFinancial : technologyFinancials) {
+                result.add(copy(technologyFinancial));
+            }
+        }
+        return result;
+    }
+
+    public static void copyDateFiled(Object source, Object target) {
+
+        Assert.notNull(source, "source must not be null");
+        Assert.notNull(target, "target must not be null");
+
+        Map<String, Object> dataFields = Maps.newHashMap();
+        Field[] declaredFields = source.getClass().getDeclaredFields();
+        for (Field filed : declaredFields) {
+            if (filed.getType().isAssignableFrom(Date.class)) {
+                try {
+                    dataFields.put(filed.getName(), DataUtil.invokeGetByObject(source, filed));
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        declaredFields = target.getClass().getDeclaredFields();
+        for (Field filed : declaredFields) {
+            Object value = dataFields.get(filed.getName());
+            if (value != null && filed.getType() == java.lang.String.class) {
+                try {
+                    DataUtil.invokeSetByObject(target, filed, DateUtil.format((Date) value, DateUtil.DEFAULT_STR_STYLE));
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static <T extends IdEntity> List<T> copyList(List sources, Class<T> targetClazz) {
+        List<T> result = Lists.newArrayList();
+        if (CollectionUtils.isEmpty(sources))
+            return result;
+        for (Object o : sources) {
+            T t = null;
+            try {
+                t = targetClazz.newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            BeanUtils.copyProperties(o, t);
+            result.add(t);
+        }
+        return result;
+    }
+
+    public static <T> List<T> copyList(List sources, Class<T> targetClazz, CopyListFilter<T> copyListFilter) {
+        List<T> result = Lists.newArrayList();
+        if (CollectionUtils.isEmpty(sources))
+            return result;
+        for (Object o : sources) {
+            T t = null;
+            try {
+                t = targetClazz.newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+//            BeanUtils.copyProperties(o, t);
+            copyListFilter.copy(sources, t);
+            result.add(t);
+        }
+        return result;
+    }
+
+   public interface CopyListFilter<T> {
+        void copy(Object source, T target);
+    }
+}

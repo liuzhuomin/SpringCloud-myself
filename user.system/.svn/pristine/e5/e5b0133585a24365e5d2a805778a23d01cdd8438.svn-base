@@ -1,0 +1,38 @@
+package liuzhuomin.cloud;
+
+import com.google.common.collect.Lists;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.Principal;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.Locale;
+import java.util.Map;
+
+/**
+ * zuul api 网关代理
+ *
+ * @author liuliuliu
+ */
+@SpringBootApplication
+@EnableZuulProxy                //开启zuul网关，标识这是一个网关程序
+@EnableHystrixDashboard        //是否开启hystrix仪表盘监控
+public class ApplicationZuul {
+
+    public static void main(String[] args) {
+        new SpringApplicationBuilder(ApplicationZuul.class).web(true).run(args);
+    }
+
+}

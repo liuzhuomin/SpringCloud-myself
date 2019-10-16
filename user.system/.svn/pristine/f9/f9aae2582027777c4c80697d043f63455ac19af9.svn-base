@@ -1,0 +1,30 @@
+package xinrui.cloud.service;
+
+import xinrui.cloud.domain.User;
+import xinrui.cloud.dto.UserDto;
+
+/**
+ * <B>Title:</B>UserService</br>
+ * <B>Description:</B>用户service</br>
+ * <B>Copyright: </B>Copyright (c) 2019 </br>
+ *
+ * @author liuliuliu
+ * @version 1.0
+ * @date2019/6/26 20:32
+ */
+public interface UserService extends BaseService<User> {
+
+    /**
+     * 根据用户登录名查找用户
+     * @param username
+     * @return
+     */
+    UserDto findUserByUserName(String username);
+
+    /**
+     * 根据用户id查找用户信息
+     * @param userId
+     * @return
+     */
+    UserDto findUserByUserId(Long userId);
+}

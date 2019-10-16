@@ -1,0 +1,9 @@
+package liuzhuomin.cloud.app;
+
+import org.hibernate.jpa.HibernateEntityManager;
+
+import liuzhuomin.cloud.domain.IdEntity;
+
+public interface HibernateObserver {
+	HibernateEntityManager update(HibernateObservable ob, Class<? extends IdEntity> clazz);
+}

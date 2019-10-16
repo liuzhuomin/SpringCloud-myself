@@ -1,0 +1,30 @@
+package liuzhuomin.cloud.fallback;
+
+import liuzhuomin.cloud.BootException;
+import liuzhuomin.cloud.dto.UserDto;
+import liuzhuomin.cloud.service.UserServiceFeign;
+import org.springframework.stereotype.Component;
+
+/**
+ * <B>Title:</B>UserServiceFallBack</br>
+ * <B>Description:</B>  </br>
+ * <B>Copyright: </B>Copyright (c) 2019 </br>
+ *
+ * @author liuliuliu
+ * @version 1.0
+ * @date2019/6/26 20:50
+ */
+@Component
+public class UserServiceFallBack implements UserServiceFeign {
+
+    @Override
+    public UserDto findUserByUserName(String username) {
+        throw new BootException("用户名称为:[ " + username + " ]的用户找不到");
+    }
+
+    @Override
+    public UserDto findUserByUserId(Long id) {
+        throw new BootException("用户id为:[ " + id + " ]的用户找不到");
+    }
+
+}

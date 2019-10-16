@@ -1,0 +1,152 @@
+package liuzhuomin.cloud.config;
+
+import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.netflix.zuul.filters.Route;
+import org.springframework.cloud.netflix.zuul.filters.RouteLocator;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.client.RestTemplate;
+import springfox.documentation.swagger.web.InMemorySwaggerResourcesProvider;
+import springfox.documentation.swagger.web.SwaggerResource;
+import springfox.documentation.swagger.web.SwaggerResourcesProvider;
+import springfox.documentation.swagger.web.UiConfiguration;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * <p/>swagger的配置类，将所有下游服务列表中的api资源获取到，并且一并展示 。
+ * <p>
+ * <p/>将所有路由到的服务列表获取到，并且获取其swaggerresource列表，其次将
+ * 其添加到默认的swaggerResource列表中；
+ * <p>
+ * <p/>配置忽略的url，通过正则，并且使用{@link OrRequestMatcher}类做匹配操作，
+ * 一旦符合匹配规则，在{@link liuzhuomin.cloud.filter.AccessFilter}中则会忽略此url。
+ *
+ * @author Jihy
+ * @author liuliuliu
+ * @since 2019-07-01 14:17
+ */
+@Configuration
+@Primary
+@PropertySource("classpath:application.properties")
+public class DocumentationConfig {
+
+    private final Logger logger = LoggerFactory.getLogger(DocumentationConfig.class);
+    /**
+     * 需要忽略的url
+     */
+    @Value("#{'${zuul.ignore.urls:none}'.split(',')}")
+    private List<String> ignoreUrls;
+
+    private List<SwaggerResource> finalSwaggerResource = Lists.newArrayList();
+
+    @Autowired
+    RouteLocator routeLocator;
+
+    @Autowired
+    RestTemplate restTemplate;
+
+    /**
+     * 自定义生成{@link SwaggerResourcesProvider}类
+     *
+     * @param defaultResourcesProvider
+     * @return
+     */
+    @Primary
+    @Bean
+    public SwaggerResourcesProvider swaggerResourcesProvider(final InMemorySwaggerResourcesProvider defaultResourcesProvider) {
+        final StringBuffer BUFFER = new StringBuffer();
+        return new SwaggerResourcesProvider() {
+            @Override
+            public List<SwaggerResource> get() {
+                //缓存当前的swaggerResource实例列表，如果为空则去请求，否则直接返回
+                if (!CollectionUtils.isEmpty(finalSwaggerResource)) {
+                    return finalSwaggerResource;
+                } else {
+                    List<SwaggerResource> resources = new ArrayList<>(defaultResourcesProvider.get());
+                    for (Route route : routeLocator.getRoutes()) {
+                        BUFFER.setLength(0);
+                        BUFFER.append("http://").append(route.getLocation()).append("/swagger-resources");
+                        logger.debug("request from {}", BUFFER);
+                        requestByRoute(resources, route);
+                    }
+                    return  finalSwaggerResource=resources;
+                }
+            }
+
+            private void requestByRoute(List<SwaggerResource> resources, Route route) {
+                ResponseEntity<String> forEntity = restTemplate.getForEntity(BUFFER.toString(), String.class);
+                if (forEntity.getStatusCode().value() == 200) {
+                    String body = forEntity.getBody();
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("request successful ,and result = {}", body);
+                    }
+                    List<SwaggerResource> swaggerResources = JSON.parseArray(body, SwaggerResource.class);
+                    for (SwaggerResource resource : swaggerResources) {
+                        String location = resource.getLocation();
+                        resource.setLocation(route.getPrefix() + location);
+                        resources.add(resource);
+                    }
+                } else {
+                    logger.debug("can not request {},skip add swaggerResources", BUFFER);
+                }
+            }
+        };
+    }
+
+    /**
+     * 通过生成{@link UiConfiguration}类，配置swagger的UI规则。
+     *
+     * @return {@link UiConfiguration}
+     * @return {@link UiConfiguration}
+     */
+    @Bean
+    UiConfiguration uiConfig() {
+        return new UiConfiguration(null, "list", "alpha", "schema",
+                UiConfiguration.Constants.DEFAULT_SUBMIT_METHODS, false, true, 60000L);
+    }
+
+    /**
+     * 创建{@link OrRequestMatcher}类，用于验证指定正则及url的逻辑
+     *
+     * @return {@link OrRequestMatcher}
+     */
+    @Bean
+    public OrRequestMatcher orRequestMatcher() {
+        return new OrRequestMatcher(requestMatchers());
+    }
+
+    /**
+     * 根据{@link #ignoreUrls}属性，生成{@link AntPathRequestMatcher}对象
+     *
+     * @return {@link List<RequestMatcher>}
+     */
+    public List<RequestMatcher> requestMatchers() {
+        int ignoreUrlListSize = ignoreUrls.size();
+        if (ignoreUrlListSize == 1) {
+            return Lists.newArrayList((RequestMatcher) new AntPathRequestMatcher(ignoreUrls.get(0)));
+        }
+        logger.info("Ignore urls: {}", ignoreUrls);
+        List<RequestMatcher> matchers = new ArrayList<>(ignoreUrlListSize);
+        for (int i = 0; i < ignoreUrlListSize; i++) {
+            matchers.add(new AntPathRequestMatcher(ignoreUrls.get(i)));
+        }
+        return matchers;
+    }
+}
+
+

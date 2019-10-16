@@ -1,0 +1,13 @@
+package liuzhuomin.cloud.service.impl;
+
+import liuzhuomin.cloud.domain.CarrierMajor;
+import liuzhuomin.cloud.service.CarrierMajorService;
+import org.springframework.stereotype.Service;
+
+/**
+ * @author Jihy
+ * @since 2019-06-25 23:36
+ */
+@Service public class CarrierMajorServiceImpl extends BaseServiceImpl<CarrierMajor> implements
+    CarrierMajorService {
+}

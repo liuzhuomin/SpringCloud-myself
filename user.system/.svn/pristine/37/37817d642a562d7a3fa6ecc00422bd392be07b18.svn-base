@@ -1,0 +1,23 @@
+package liuzhuomin.cloud.service.impl;
+
+import java.util.List;
+import liuzhuomin.cloud.domain.CarrierDataBase;
+import liuzhuomin.cloud.domain.dto.CarrierDataBaseDTO;
+import liuzhuomin.cloud.service.CarrierDataBaseService;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Service;
+
+/**
+ * @author Jihy
+ * @since 2019-06-25 23:53
+ */
+@Service public class CarrierDataBaseServiceImpl extends BaseServiceImpl<CarrierDataBase> implements
+    CarrierDataBaseService {
+
+  @Override public List<CarrierDataBaseDTO> getCarrierDataBaseListByCarrierId(Long carrierId) {
+    List<CarrierDataBase> carrierDataBases = dao.listBydCriteria(DetachedCriteria.forClass(CarrierDataBase.class).add(
+        Restrictions.eq("carrier.id", carrierId)));
+    return CarrierDataBaseDTO.copyForm(carrierDataBases);
+  }
+}

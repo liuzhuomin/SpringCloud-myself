@@ -1,0 +1,39 @@
+package xinrui.cloud.service;
+
+import xinrui.cloud.domain.dto.TechnologyFinancialDto;
+import xinrui.cloud.domain.dto.TechnologyLoanAmountDto;
+import xinrui.cloud.domain.dto.TechnologyLoanDateDto;
+import xinrui.cloud.domain.dto.TechnologyLoanTypeDto;
+
+import java.util.List;
+
+/**
+ * 科技金融接口
+ */
+public interface TechnologyFinancialService extends BaseService {
+
+    /**
+     * 获取贷款期限列表
+     * @return {@link TechnologyLoanDateDto}
+     */
+    List<TechnologyLoanDateDto> dates();
+
+    /**
+     * 获取贷款类型列表
+     * @return {@link TechnologyLoanTypeDto}
+     */
+    List<TechnologyLoanTypeDto> types();
+
+    /**
+     * 获取贷款额度列表
+     * @return {@link TechnologyLoanAmountDto}
+     */
+    List<TechnologyLoanAmountDto> amounts();
+
+    /**
+     * 储存
+     * @param technologyFinancialDto
+     * @return
+     */
+    TechnologyFinancialDto saveByDto(TechnologyFinancialDto technologyFinancialDto);
+}

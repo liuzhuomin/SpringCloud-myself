@@ -1,0 +1,29 @@
+package xinrui.cloud.fallback;
+
+import xinrui.cloud.dto.UserDto;
+import xinrui.cloud.service.UserServiceFeign;
+import org.springframework.stereotype.Component;
+
+/**
+ * <B>Title:</B>UserServiceFallBack</br>
+ * <B>Description:</B>用户信息接口降级处理</br>
+ * <B>Copyright: </B>Copyright (c) 2019 </br>
+ *
+ * @author liuliuliu
+ * @version 1.0
+ * @date2019/6/26 20:50
+ */
+@Component
+public class UserServiceFallBack implements UserServiceFeign {
+
+    @Override
+    public UserDto findUserByUserName(String username) {
+        return null;
+    }
+
+    @Override
+    public UserDto findUserByUserId(Long id) {
+        return null;
+    }
+
+}

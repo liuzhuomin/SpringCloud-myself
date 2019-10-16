@@ -1,0 +1,60 @@
+SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for zhjf_request_model
+-- ----------------------------
+CREATE TABLE  IF NOT EXISTS `zhjf_request_model` (
+  `id` bigint(20) NOT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `method` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50001', '50001', 'http://localhost:8280/policy/list/notCreate') ON DUPLICATE KEY UPDATE id=id;;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50002', '50002', 'http://localhost:8280/policy/template/add') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50003', '50003', 'http://localhost:8280/policy/template/edit') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50004', '50004', 'http://localhost:8280/policy/template/delete') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50005', '50005', 'http://localhost:8280/policy/template/list') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50006', '50006', 'http://localhost:8280/policy/activity/list') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50007', '50007', 'http://localhost:8280/policy/activity/delete') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50008', '50008', 'http://localhost:8280/problem/add/other') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50009', '50009', 'http://localhost:8280/problem/json') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50010', '50010', 'http://localhost:8280/problem/add/singleradio') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50011', '50011', 'http://localhost:8280/problem/limit/basedata') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50012', '50012', 'http://localhost:8280/problem/limit/add') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50013', '50013', 'http://localhost:8280/problem/edit/singleradio/before') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50014', '50014', 'http://localhost:8280/problem/edit/singleradio') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50015', '50015', 'http://localhost:8280/problem/edit/other') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50016', '50016', 'http://localhost:8280/problem/delete/all') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50017', '50017', 'http://localhost:8280/problem/limit/delete') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50018', '50018', 'http://localhost:8280/problem/limit/edit') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50019', '50019', 'http://localhost:8280/problem/limit/json') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50020', '50020', 'http://localhost:8280/problem/trigger/listData/before/add') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50021', '50021', 'http://localhost:8280/problem/trigger/add') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50022', '50022', 'http://localhost:8280/problem/trigger/delete') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50023', '50023', 'http://localhost:8280/problem/trigger/edit') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50024', '50024', 'http://localhost:8280/problem/trigger/json') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50025', '50025', 'http://localhost:8280/problem/trigger/result/add') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50026', '50026', 'http://localhost:8280/problem/trigger/result/delete') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50027', '50027', 'http://localhost:8280/problem/trigger/result/edit') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50028', '50028', 'http://localhost:8280/problem/trigger/result/json') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50029', '50029', 'http://localhost:8280/policy/list/group/all') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50030', '50030', 'http://localhost:8280/policy/page/byGroup') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50031', '50031', 'http://localhost:8280/policy/list/group/created') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50032', '50032', 'http://localhost:8280/policy/create/template') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50033', '50033', 'http://localhost:8280/policy/match') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50051', '50051', 'http://localhost:8280/policy/editGroup') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50052', '50052', 'http://localhost:8280/policy/listGroup') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50053', '50053', 'http://localhost:8280/policy/findCompanyInfo/byName') ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `zhjf_request_model` (`id`, `code`, `method`) VALUES ('50054', '50054', 'http://localhost:8280/policy/addCompany') ON DUPLICATE KEY UPDATE id=id;
+
+INSERT INTO `policy_match_group` (`id`, `content`, `small_pic`, `title`, `is_administration`) VALUES ('468922', 'asdasdasd', 'http://134.175.204.243:8080/zhjf-v2/filecommon/downloadFile?filePath=data/zhjf/help/29457bdd11bc20e9044ba6b4da49939f.png', '科技中小企业类', NULL)  ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `policy_match_group` (`id`, `content`, `small_pic`, `title`, `is_administration`) VALUES ('468923', '', 'http://134.175.204.243:8080/zhjf-v2/filecommon/downloadFile?filePath=data/zhjf/help/32cf9310b2f5f429d3406a7026cfd196.png', '国家高新技术企业类', NULL)  ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `policy_match_group` (`id`, `content`, `small_pic`, `title`, `is_administration`) VALUES ('468924', '', 'http://134.175.204.243:8080/zhjf-v2/filecommon/downloadFile?filePath=data/zhjf/help/7658e1d5e82509812659f9a30961910e.png', '创新创业类', NULL)  ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `policy_match_group` (`id`, `content`, `small_pic`, `title`, `is_administration`) VALUES ('468925', '', 'http://134.175.204.243:8080/zhjf-v2/filecommon/downloadFile?filePath=data/zhjf/help/ffd3ed76fa235a7e6f0f930bfa334909.png', '园区类', NULL)  ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `policy_match_group` (`id`, `content`, `small_pic`, `title`, `is_administration`) VALUES ('468926', '', 'http://134.175.204.243:8080/zhjf-v2/filecommon/downloadFile?filePath=data/zhjf/help/915aca294a801221911e00b4f0eb2cfe.png', '科技成果转化类', NULL)  ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `policy_match_group` (`id`, `content`, `small_pic`, `title`, `is_administration`) VALUES ('468927', '', 'http://134.175.204.243:8080/zhjf-v2/filecommon/downloadFile?filePath=data/zhjf/help/5034f393b22b1bd7db4a0b7a16312bfa.png', '科研或科技项目类', NULL)  ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `policy_match_group` (`id`, `content`, `small_pic`, `title`, `is_administration`) VALUES ('468928', '', 'http://134.175.204.243:8080/zhjf-v2/filecommon/downloadFile?filePath=data/zhjf/help/dad2dc579e9f8efc7162e327a8acf7dc.png', '服务类', NULL)  ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `policy_match_group` (`id`, `content`, `small_pic`, `title`, `is_administration`) VALUES ('468929', '', 'http://134.175.204.243:8080/zhjf-v2/filecommon/downloadFile?filePath=data/zhjf/help/1c007a98464fd941461880ba4947c8c5.png', '产业类', NULL)  ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `policy_match_group` (`id`, `content`, `small_pic`, `title`, `is_administration`) VALUES ('468930', '', 'http://134.175.204.243:8080/zhjf-v2/filecommon/downloadFile?filePath=data/zhjf/help/a82eb5ed6a8ea451daa2ad7a8087879b.png', '其他奖励资助类', NULL)  ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `policy_match_group` (`id`, `content`, `small_pic`, `title`, `is_administration`) VALUES ('468931', '集成电路', '', '集成电路', NULL) ON DUPLICATE KEY UPDATE id=id;
+
+

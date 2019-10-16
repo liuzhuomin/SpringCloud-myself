@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/base-jpa/base-jpa.iml" filepath="$PROJECT_DIR$/base-jpa/base-jpa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-model/base-model.iml" filepath="$PROJECT_DIR$/base-model/base-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/carrier-cord/carrier-cord.iml" filepath="$PROJECT_DIR$/carrier-cord/carrier-cord.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-common/common.iml" filepath="$PROJECT_DIR$/base-common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jwt-oauth/jwt-oauth.iml" filepath="$PROJECT_DIR$/jwt-oauth/jwt-oauth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/leader-index/leader-index.iml" filepath="$PROJECT_DIR$/leader-index/leader-index.iml" />
+      <module fileurl="file://$PROJECT_DIR$/policy-matching/policy-matching.iml" filepath="$PROJECT_DIR$/policy-matching/policy-matching.iml" />
+      <module fileurl="file://$PROJECT_DIR$/policy-matching-129/policy-matching (1).iml" filepath="$PROJECT_DIR$/policy-matching-129/policy-matching (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/policy-matching-129/policy-matching-ps.iml" filepath="$PROJECT_DIR$/policy-matching-129/policy-matching-ps.iml" />
+      <module fileurl="file://$PROJECT_DIR$/user-zuul/user-zuul.iml" filepath="$PROJECT_DIR$/user-zuul/user-zuul.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web-util/user-zuul (1).iml" filepath="$PROJECT_DIR$/web-util/user-zuul (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/user.system.iml" filepath="$PROJECT_DIR$/.idea/user.system.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web-util/webutil.iml" filepath="$PROJECT_DIR$/web-util/webutil.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xinrui-jpa-model/xinrui-jpa-model.iml" filepath="$PROJECT_DIR$/xinrui-jpa-model/xinrui-jpa-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xinrui-model/xinrui-model.iml" filepath="$PROJECT_DIR$/xinrui-model/xinrui-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xinrui-validation/xinrui-model (1).iml" filepath="$PROJECT_DIR$/xinrui-validation/xinrui-model (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/xinrui-validation/xinrui-validation.iml" filepath="$PROJECT_DIR$/xinrui-validation/xinrui-validation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xinrui-jpa-dao/yhyweb-jpa-dao.iml" filepath="$PROJECT_DIR$/xinrui-jpa-dao/yhyweb-jpa-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xinrui-model/yhyweb-jpa-dao (1).iml" filepath="$PROJECT_DIR$/xinrui-model/yhyweb-jpa-dao (1).iml" />
+    </modules>
+  </component>
+</project>

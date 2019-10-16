@@ -1,0 +1,25 @@
+package liuzhuomin.cloud.service.impl;
+
+import org.springframework.security.oauth2.provider.ClientDetails;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.ClientRegistrationException;
+import org.springframework.stereotype.Service;
+
+/**
+ * <B>Title:</B>ClientDetailServiceImpl</br>
+ * <B>Description:</B>  </br>
+ * <B>Copyright: </B>Copyright (c) 2019 </br>
+ *
+ * @author liuliuliu
+ * @version 1.0
+ * @date2019/6/26 12:49
+ */
+@Service
+public class ClientDetailServiceImpl implements ClientDetailsService {
+
+
+    @Override
+    public ClientDetails loadClientByClientId(String s) throws ClientRegistrationException {
+        return null;
+    }
+}

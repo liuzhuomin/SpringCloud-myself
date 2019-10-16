@@ -1,0 +1,257 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>xinrui.cloud.user</groupId>
+        <artifactId>user-system</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>user-zuul</artifactId>
+    <name><![CDATA[<<服务网关>>提供给对外访问的统一接口]]></name>
+    <description>负责调用多个服务集群直接的接口</description>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>xinrui.cloud.user</groupId>
+            <artifactId>base-model</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zuul</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-dependencies</artifactId>
+            <version>Dalston.SR4</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-hystrix</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-ribbon</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security-web.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xinrui.cloud.user</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka-server</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+        </dependency>
+
+
+    </dependencies>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>sonatype-snapshot</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>xinrui.cloud.ApplicationZuul</mainClass>
+                    <layout>ZIP</layout>
+                    <attach>false</attach>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--<plugin>-->
+                <!--<groupId>com.github.kongchen</groupId>-->
+                <!--<artifactId>swagger-maven-plugin</artifactId>-->
+                <!--<version>3.0.0</version>-->
+                <!--<configuration>-->
+                    <!--<apiSources>-->
+                        <!--<apiSource>-->
+                            <!--<springmvc>true</springmvc>-->
+                            <!--<locations>-->
+                                <!--xinrui-->
+                            <!--</locations>-->
+                            <!--<schemes>-->
+                                <!--http-->
+                            <!--</schemes>-->
+                            <!--<host>http://localhost:8080</host>-->
+                            <!--<basePath>/api</basePath>-->
+                            <!--<info>-->
+                                <!--<title>Swagger Maven Plugin Sample</title>-->
+                                <!--<version>v1</version>-->
+                                <!--&lt;!&ndash; use markdown here because I'm using markdown for output, if-->
+                                    <!--you need to use html or other markup language, you need to use your target-->
+                                    <!--language, and note escape your description for xml &ndash;&gt;-->
+                                <!--<description>-->
+                                    <!--This is a sample.-->
+                                <!--</description>-->
+                                <!--<termsOfService>-->
+                                    <!--http://www.github.com/kongchen/swagger-maven-plugin-->
+                                <!--</termsOfService>-->
+                                <!--<contact>-->
+                                    <!--<email>kongchen@gmail.com</email>-->
+                                    <!--<name>Kong Chen</name>-->
+                                    <!--<url>http://kongch.com</url>-->
+                                <!--</contact>-->
+                                <!--<license>-->
+                                    <!--<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>-->
+                                    <!--<name>Apache 2.0</name>-->
+                                <!--</license>-->
+                            <!--</info>-->
+                           <!--&lt;!&ndash; <securityDefinitions>-->
+                                <!--<securityDefinition>-->
+                                    <!--<name>basicAuth</name>-->
+                                    <!--<type>basic</type>-->
+                                <!--</securityDefinition>-->
+                                <!--<securityDefinition>-->
+                                    <!--<json>/securityDefinition.json</json>-->
+                                <!--</securityDefinition>-->
+                            <!--</securityDefinitions>&ndash;&gt;-->
+                           <!--&lt;!&ndash; <responseMessageOverrides>-->
+                                <!--<responseMessageOverride>-->
+                                    <!--<code>401</code>-->
+                                    <!--<message>Unauthenticated - could not authenticate the user.</message>-->
+                                <!--</responseMessageOverride>-->
+                                <!--<responseMessageOverride>-->
+                                    <!--<code>403</code>-->
+                                    <!--<message>Forbidden - the user does not have the required-->
+                                        <!--permissions to execute this request.</message>-->
+                                <!--</responseMessageOverride>-->
+                            <!--</responseMessageOverrides>&ndash;&gt;-->
+
+                            <!--&lt;!&ndash; Support classpath or file absolute path here. 1) classpath e.g:-->
+                                <!--"classpath:/markdown.hbs", "classpath:/templates/hello.html" 2) file e.g:-->
+                                <!--"${basedir}/src/main/resources/markdown.hbs", "${basedir}/src/main/resources/template/hello.html" &ndash;&gt;-->
+                            <!--&lt;!&ndash;<templatePath>${basedir}/src/test/resources/strapdown.html.hbs</templatePath>&ndash;&gt;-->
+                            <!--<outputPath>${basedir}/generated/document.html</outputPath>-->
+                            <!--<swaggerDirectory>${basedir}/generated/swagger-ui</swaggerDirectory>-->
+                            <!--<swaggerApiReader>com.wordnik.swagger.jaxrs.reader.DefaultJaxrsApiReader</swaggerApiReader>-->
+                            <!--&lt;!&ndash;<attachSwaggerArtifact>true</attachSwaggerArtifact>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<modelConverters>io.swagger.validator.BeanValidator</modelConverters>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<swaggerExtensions>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<swaggerExtension>com.example.VendorExtension</swaggerExtension>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</swaggerExtensions>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<enabledObjectMapperFeatures>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<feature>com.fasterxml.jackson.databind.SerializationFeature.WRITE_ENUMS_USING_TO_STRING</feature>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<feature>com.fasterxml.jackson.core.JsonParser$Feature.ALLOW_NUMERIC_LEADING_ZEROS</feature>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</enabledObjectMapperFeatures>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<disabledObjectMapperFeatures>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<feature>com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS</feature>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</disabledObjectMapperFeatures>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<operationIdFormat>{{className}}_{{methodName}}_{{httpMethod}}</operationIdFormat>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<externalDocs>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<description>Example external docs</description>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<url>https://example.com/docs</url>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</externalDocs>&ndash;&gt;-->
+                        <!--</apiSource>-->
+                    <!--</apiSources>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<phase>compile</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>generate</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--<dependencies>-->
+                    <!--&lt;!&ndash; Adding dependency to swagger-hibernate-validations to enable the-->
+                        <!--BeanValidator as a custom model converter &ndash;&gt;-->
+                    <!--<dependency>-->
+                        <!--<groupId>io.swagger</groupId>-->
+                        <!--<artifactId>swagger-hibernate-validations</artifactId>-->
+                        <!--<version>1.5.6</version>-->
+                    <!--</dependency>-->
+                <!--</dependencies>-->
+            <!--</plugin>-->
+        </plugins>
+    </build>
+</project>

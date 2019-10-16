@@ -1,0 +1,16 @@
+package liuzhuomin.cloud.service.impl;
+
+import liuzhuomin.cloud.domain.CarrierOperatingTeam;
+import liuzhuomin.cloud.service.CarrierOperatingTeamService;
+import org.springframework.stereotype.Service;
+
+/**
+ * @author Jihy
+ * @since 2019-06-25 21:11
+ */
+@Service
+public class CarrierOperatingTeamServiceImpl extends BaseServiceImpl<CarrierOperatingTeam> implements
+    CarrierOperatingTeamService {
+
+
+}

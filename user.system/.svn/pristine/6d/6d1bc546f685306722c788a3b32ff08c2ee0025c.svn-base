@@ -1,0 +1,30 @@
+package liuzhuomin.cloud.fallback;
+
+import liuzhuomin.cloud.BootException;
+import liuzhuomin.cloud.dto.UserDto;
+import liuzhuomin.cloud.service.UserService;
+import org.springframework.stereotype.Component;
+
+/**
+ * <B>Title:</B>UserServiceFallBack</br>
+ * <B>Description:</B>  </br>
+ * <B>Copyright: </B>Copyright (c) 2019 </br>
+ *
+ * @author liuliuliu
+ * @version 1.0
+ * @date2019/6/26 20:50
+ */
+@Component
+public class UserServiceFallBack implements UserService {
+
+    @Override
+    public UserDto findUserByUserName(String username) {
+        return null;
+    }
+
+    @Override
+    public UserDto findUserByUserId(Long id) {
+        return null;
+    }
+
+}

@@ -1,0 +1,10 @@
+package liuzhuomin.cloud.service;
+
+import liuzhuomin.cloud.domain.CarrierProfessionalDirection;
+
+/**
+ * @author Jihy
+ * @since 2019-06-26 16:37
+ */
+public interface CarrierProfessionalDirectionService extends BaseService<CarrierProfessionalDirection> {
+}

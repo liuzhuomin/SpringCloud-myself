@@ -1,0 +1,5 @@
+package liuzhuomin.cloud.domain.Interfaces;
+
+public interface IOrganization {
+
+}

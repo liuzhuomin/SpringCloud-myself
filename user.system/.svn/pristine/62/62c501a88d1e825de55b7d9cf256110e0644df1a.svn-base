@@ -1,0 +1,12 @@
+package liuzhuomin.cloud.service;
+
+import liuzhuomin.cloud.domain.NoticeFile;
+import liuzhuomin.cloud.domain.dto.NoticeFileDto;
+
+import java.util.List;
+
+public interface NoticeFileService extends BaseService<NoticeFile> {
+    List<NoticeFileDto> getFileList(Long NoiceId);
+    void deleteFile(Long NoiceId);
+    void insertFile(String noticeId, String filesJson);
+}

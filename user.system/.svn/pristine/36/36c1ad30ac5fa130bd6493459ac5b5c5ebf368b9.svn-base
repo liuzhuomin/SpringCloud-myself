@@ -1,0 +1,178 @@
+package xinrui.cloud.controller;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import xinrui.cloud.compoment.Application;
+import xinrui.cloud.domain.TechnologyFinancialFile;
+import xinrui.cloud.domain.dto.TechnologyFinancialDto;
+import xinrui.cloud.domain.dto.TechnologyLoanAmountDto;
+import xinrui.cloud.domain.dto.TechnologyLoanDateDto;
+import xinrui.cloud.domain.dto.TechnologyLoanTypeDto;
+import xinrui.cloud.domain.vto.TechnologyFinancialVto;
+import xinrui.cloud.dto.ResponseDto;
+import xinrui.cloud.dto.ResultDto;
+import xinrui.cloud.interfaces.FileExtensionFilter;
+import xinrui.cloud.service.TechnologyFinancialFileService;
+import xinrui.cloud.service.TechnologyFinancialService;
+import xinrui.cloud.util.FileUtil;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.List;
+
+/**
+ * 科技金融相关项目
+ *
+ * @author liuliuliu
+ * @version 1.0
+ * @date 2019/8/5 16:23
+ */
+@Api("科技金融模块")
+@RestController
+@RequestMapping("technology")
+public class TechnologyFinancialController {
+
+    @Autowired
+    TechnologyFinancialService technologyFinancialService;
+
+    @Autowired
+    TechnologyFinancialFileService technologyFinancialFileService;
+
+    @GetMapping("/dates")
+    @ApiOperation(position = 1, value = "获取贷款期限列表", notes = "获取贷款期限列表(3个月、5个月等)", tags = "科技金融模块", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResultDto<List<TechnologyLoanDateDto>> dates() {
+        return ResponseDto.success(technologyFinancialService.dates());
+    }
+
+    @GetMapping("/types")
+    @ApiOperation(position = 2, value = "获取贷款类型列表", notes = "获取贷款类型列表(有价证券、票据等)", tags = "科技金融模块", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResultDto<List<TechnologyLoanTypeDto>> types() {
+        return ResponseDto.success(technologyFinancialService.types());
+    }
+
+    @GetMapping("/amounts")
+    @ApiOperation(position = 3, value = "获取贷款额度列表", notes = "获取贷款额度列表(100万以下、200万等)", tags = "科技金融模块", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResultDto<List<TechnologyLoanAmountDto>> amounts() {
+        return ResponseDto.success(technologyFinancialService.amounts());
+    }
+
+    @PostMapping("/save")
+    @ApiOperation(position = 4, value = "银行端创建产品（保存）", notes = "银行端创建产品", tags = "科技金融模块", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResultDto<TechnologyFinancialDto> saveTechnology(@RequestBody @ApiParam(value = "传递科技金融核心对象", required = true) TechnologyFinancialVto technologyFinancialVto) {
+        return ResponseDto.success(technologyFinancialService.saveByDto(technologyFinancialVto));
+    }
+
+    @PostMapping("/public")
+    @ApiOperation(position = 4, value = "银行端创建产品（发布）", notes = "银行端创建产品", tags = "科技金融模块", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResultDto<TechnologyFinancialDto> publicTechnology(@RequestBody @ApiParam(value = "传递科技金融核心对象", required = true) TechnologyFinancialVto technologyFinancialVto) {
+        return ResponseDto.success(technologyFinancialService.saveByDto(technologyFinancialVto));
+    }
+
+    @PostMapping("/public/{id}")
+    @ApiOperation(position = 4, value = "草稿箱发布", notes = "根据科技金融产品id发布草稿箱产品", tags = "科技金融模块", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResultDto<TechnologyFinancialDto> publicTechnology(@PathVariable("id") Long id) {
+//        return ResponseDto.success(technologyFinancialService.saveByDto(technologyFinancialVto));
+        return null;
+    }
+
+    @DeleteMapping("/{id}")
+    @ApiOperation(position = 5, value = "银行端删除产品", notes = "银行端根据科技金融id删除产品", tags = "科技金融模块", httpMethod = "DELETE", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResultDto<?> deleteTechnology(@PathVariable Long id) {
+        try {
+            technologyFinancialService.remove(id);
+        } catch (Exception e) {
+            return ResponseDto.success("数据不存在!");
+        }
+        return ResponseDto.success("删除成功!");
+    }
+
+
+    @ApiOperation(position = 6, value = "上传图片", notes = "上传图片格式的文件，可支持的文件类型有(\"BMP\", \"JPG\", \"JPEG\",\n" +
+            "                \"PNG\", \"GIF\", \"PCX\", \"TIFF\", \"TGA\", \"EXIF\",\n" +
+            "                \"FPX\", \"SVG\", \"PSD\")", tags = "科技金融模块", httpMethod = "POST", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResultDto uploadFile(@RequestPart String description, @RequestPart MultipartFile file) throws IOException {
+
+        String property = System.getProperty("user.dir");
+        File fileObject = FileUtil.saveFile(property + File.separator + "technology", file, new FileExtensionFilter() {
+            @Override
+            public boolean canContinue(MultipartFile file) {
+                String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+                String[] suffixArray = new String[]{"BMP", "JPG", "JPEG",
+                        "PNG", "GIF", "PCX", "TIFF", "TGA", "EXIF",
+                        "FPX", "SVG", "PSD"};
+                if (StringUtils.isNotBlank(extension)) {
+                    for (int i = 0; i < suffixArray.length; i++) {
+                        String suffix = suffixArray[i];
+                        if (extension.equalsIgnoreCase(suffix)) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+
+        });
+        TechnologyFinancialFile technologyFinancialFile = new TechnologyFinancialFile();
+        technologyFinancialFile.setUserId(Application.getCurrentUser().getId());
+        technologyFinancialFile.setServerUri(Application.getBaseUrl());
+        technologyFinancialFile.setMenu("/technology");
+        technologyFinancialFile.setDescription(description);
+        technologyFinancialFile.setName(fileObject.getName());
+
+        HttpServletRequest request = Application.getRequest();
+        String downLoadPath = request.getScheme() + "://" + request.getServerName() + ":" + "7100/carrier/technology/download";
+        downLoadPath += "?filePath=" + technologyFinancialFile.getMenu() + "/" + fileObject.getName();
+        technologyFinancialFile.setFullPath(downLoadPath);
+        technologyFinancialFileService.persist(technologyFinancialFile);
+        return ResponseDto.success(downLoadPath);
+    }
+
+    @ApiOperation(position = 7, value = "下载文件", notes = "根据filePath路径下载文件", tags = "科技金融模块", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiImplicitParam(name = "filePath", value = "下载的路径", required = true, paramType = "query", dataType = "String")
+    @GetMapping("download")
+    public void download(@RequestParam(value = "filePath") String filePath,
+                         HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String substring = filePath.substring(filePath.lastIndexOf('/') + 1);
+        filePath = filePath.replace(substring, URLEncoder.encode(substring, StandardCharsets.UTF_8.name()));
+        String property = System.getProperty("user.dir");
+        property = property + File.separator + filePath;
+        property = property.replace("/", File.separator).replace("\\", File.separator);
+        FileSystemResource resource = new FileSystemResource(property);
+        String fileName = resource.getFilename();
+        response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+        response.setContentType(Files.probeContentType(resource.getFile().toPath()));
+
+        ServletOutputStream outputStream = response.getOutputStream();
+        InputStream inputStream = resource.getInputStream();
+        IOUtils.copy(inputStream, outputStream);
+        response.flushBuffer();
+        if (inputStream != null) {
+            inputStream.close();
+        }
+        if (outputStream != null) {
+            outputStream.close();
+        }
+
+    }
+
+
+}
+

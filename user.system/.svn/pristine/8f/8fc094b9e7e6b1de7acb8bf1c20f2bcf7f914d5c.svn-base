@@ -1,0 +1,86 @@
+package liuzhuomin.cloud.filter;
+
+import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.context.RequestContext;
+import liuzhuomin.cloud.dto.ResultDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * 专门处理Options的拦截器。
+ * 优先级最高。
+ *
+ * @author Jihy
+ * @since 2019-07-01 21:11
+ */
+@Component
+public class OptionsFilter extends ZuulFilter {
+
+    private final Logger logger = LoggerFactory.getLogger(OptionsFilter.class);
+
+    /**
+     * 表示在请求前进行拦截
+     *
+     * @return
+     */
+    @Override
+    public String filterType() {
+        return FilterConstants.PRE_TYPE;
+    }
+
+    /**
+     * 此过滤器的排序顺序，为0代表第一个
+     *
+     * @return
+     */
+    @Override
+    public int filterOrder() {
+        return 0;
+    }
+
+    /**
+     * 只过滤options请求
+     *
+     * @return 需要过滤时返回true，如果是options类型的请求，则返回true
+     */
+    @Override
+    public boolean shouldFilter() {
+        RequestContext ctx = RequestContext.getCurrentContext();
+        HttpServletRequest request = ctx.getRequest();
+        if (request.getMethod().equals(RequestMethod.OPTIONS.name())) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 终止options的请求，返回成功状态，但是不再往zuul下游路由。
+     *
+     * @return
+     */
+    @Override
+    public Object run() {
+        logger.debug("*****************FirstFilter run start*****************");
+        RequestContext ctx = RequestContext.getCurrentContext();
+        HttpServletResponse response = ctx.getResponse();
+        HttpServletRequest request = ctx.getRequest();
+
+        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS");
+        response.setHeader("Access-Control-Expose-Headers", "X-forwared-port, X-forwarded-host");
+        response.setHeader("Vary", "Origin,Access-Control-Request-Method,Access-Control-Request-Headers");
+        response.setHeader("Access-Control-Allow-Headers", request.getHeader("Access-Control-Request-Headers"));
+
+        ctx.setSendZuulResponse(false);
+        ctx.setResponseStatusCode(200);
+        logger.debug("*****************FirstFilter run end*****************");
+        return ResultDto.SUCCESS;
+    }
+}

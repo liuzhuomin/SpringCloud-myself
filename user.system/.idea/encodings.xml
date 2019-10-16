@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" addBOMForNewFiles="with NO BOM">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-jpa" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-model" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/carrier-cord" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jwt-oauth" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/leader-index" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/policy-matching" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/policy-matching-129" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-zuul" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web-util" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xinrui-jpa" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xinrui-jpa-dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xinrui-jpa-model" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xinrui-model" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xinrui-validation" charset="UTF-8" />
+  </component>
+</project>

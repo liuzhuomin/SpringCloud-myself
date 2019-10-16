@@ -1,0 +1,45 @@
+package xinrui.cloud.domain.dto;
+
+import com.google.common.collect.Lists;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import org.springframework.util.CollectionUtils;
+import xinrui.cloud.domain.IdEntity;
+import xinrui.cloud.domain.TechnologyLoanDate;
+import xinrui.cloud.domain.TechnologyLoanType;
+
+import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
+import java.util.List;
+
+@ApiModel("贷款类别数据传输对象")
+public class TechnologyLoanTypeDto extends IdEntity {
+
+    @ApiModelProperty(value = "贷款类别的文本值", position = 1)
+    private String type;
+
+    public TechnologyLoanTypeDto(String type) {
+        this.type = type;
+    }
+
+    public TechnologyLoanTypeDto() {
+    }
+
+    public static List<TechnologyLoanTypeDto> copy(List<TechnologyLoanType> source) {
+        List<TechnologyLoanTypeDto> results = Lists.newArrayList();
+        if (!CollectionUtils.isEmpty(source)) {
+            for (TechnologyLoanType t : source) {
+                results.add(new TechnologyLoanTypeDto(t.getType()));
+            }
+        }
+        return results;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+}

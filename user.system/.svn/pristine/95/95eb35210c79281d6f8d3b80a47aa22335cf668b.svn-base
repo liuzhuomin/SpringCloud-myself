@@ -1,0 +1,105 @@
+package xinrui.cloud.controller;
+
+import io.swagger.annotations.*;
+import org.hibernate.annotations.GeneratorType;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.*;
+import xinrui.cloud.domain.TechnologyFinancial;
+import xinrui.cloud.domain.dto.TechnologyFinancialBaseInfoDto;
+import xinrui.cloud.domain.dto.TechnologyFinancialDto;
+import xinrui.cloud.domain.dto.TechnologyFinancialUserDto;
+import xinrui.cloud.dto.PageDto;
+import xinrui.cloud.dto.ResponseDto;
+import xinrui.cloud.dto.ResultDto;
+import xinrui.cloud.service.TechnologyFinancialService;
+import xinrui.cloud.util.DataUtil;
+
+import javax.validation.constraints.NotNull;
+import java.util.List;
+
+/**
+ * 科技金融接口(政府端)
+ *
+ * @author liuliuliu
+ * @version 1.0
+ * @date 2019/8/9 14:57
+ */
+@Api("科技金融模块（企业端）")
+@RestController
+@RequestMapping("technology/company")
+public class TechnologyFinancialCompanyController {
+
+    @Autowired
+    TechnologyFinancialService technologyFinancialService;
+
+
+    @GetMapping("/list")
+    @ApiOperation(position = 1, value = "根据筛选条件获取金融产品",
+            notes = "根据筛选条件获取金融产品，(贷款金额、贷款期限、传递id值),其他的传递文本值即可",
+            tags = "科技金融模块（企业端）", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "amount", value = "传递贷款额度数据传输对象的id", paramType = "query", dataType = "INT"),
+            @ApiImplicitParam(name = "limit", value = "传递贷款期限数据传输对象的id", paramType = "query", dataType = "INT"),
+            @ApiImplicitParam(name = "category", value = "科技金融类别只可能为 信用贷/抵押贷", paramType = "query", dataType = "STRING"),
+            @ApiImplicitParam(name = "name", value = "科技金融产品名称", paramType = "query", dataType = "STRING"),
+            @ApiImplicitParam(name = "currentPage", value = "当前页码", paramType = "query", dataType = "INT", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "一页大小", paramType = "query", dataType = "INT", required = true)
+    })
+    public ResultDto<PageDto<List<TechnologyFinancialBaseInfoDto>>> listAudit(@RequestParam(value = "amount", required = false) int amount,
+                                                                              @RequestParam(value = "limit", required = false) int limit,
+                                                                              @RequestParam(value = "category", required = false) String category,
+                                                                              @RequestParam(value = "name", required = false) String name,
+                                                                              @RequestParam("currentPage") int currentPage,
+                                                                              @RequestParam("pageSize") int pageSize) {
+        return ResponseDto.success(technologyFinancialService.onlines(amount, limit, category, name, currentPage, pageSize));
+    }
+
+
+    @GetMapping("/list/images")
+    @ApiOperation(position = 2, value = "获取首页轮播展示图片的下载地址", notes = "获取首页轮播展示图片的下载地址",
+            tags = "科技金融模块（企业端）", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResultDto<?> iamgeUrls() {
+//        technologyFinancialService.audit(id, TechnologyFinancial.TechnologyStatus.ONLINE, null);
+        return ResponseDto.success("审核通过成功");
+    }
+
+
+    @GetMapping("/list/appointment")
+    @ApiOperation(position = 2, value = "获取所有已经预约的产品列表", notes = "获取所有已经预约的产品列表",
+            tags = "科技金融模块（企业端）", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResultDto<PageDto<List<TechnologyFinancialDto>>> listAppointment() {
+//        technologyFinancialService.audit(id, TechnologyFinancial.TechnologyStatus.ONLINE, null);
+//        return ResponseDto.success("审核通过成功");
+        return null;
+    }
+
+    @GetMapping("/list/{id}")
+    @ApiOperation(position = 3, value = "获取深圳行政区域及其所关联街道", notes = "获取深圳行政区域及其所关联街道",
+            tags = "科技金融模块（企业端）", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "id", value = "科技金融对象的id", paramType = "path", dataType = "INT", required = true),
+            @ApiImplicitParam(name = "reason", value = "拒绝的理由", paramType = "path", dataType = "STRING", required = true)
+    })
+    public ResultDto<?> refused(@PathVariable("id") @NotNull int id, @PathVariable("reason") @NotEmpty String reason) {
+//        technologyFinancialService.audit(id, TechnologyFinancial.TechnologyStatus.REFUSED, reason);
+//        TODO 获取行政区域
+        return ResponseDto.success("拒绝通过成功!");
+    }
+
+    @PostMapping("/appointment/id")
+    @ApiOperation(position = 4, value = "科技金融产品预约", notes = "科技金融产品预约",
+            tags = "科技金融模块（企业端）", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "科技金融对象的id", paramType = "path", dataType = "INT", required = true)/*,
+            @ApiImplicitParam(name = "user", value = "预约用户对象的基本信息", paramType = "query", dataType = "INT", required = true)*/
+    })
+    public ResultDto<?> offline(@PathVariable("id") @NotNull int id,
+                                @RequestBody @ApiParam(value = "科技金融预约用户数据传输对象", required = true) TechnologyFinancialUserDto user) {
+        technologyFinancialService.appointment(id, user);
+        return ResponseDto.success("恭喜您预约成功!");
+    }
+
+}

@@ -1,0 +1,29 @@
+package xinrui.cloud.service;
+
+import org.springframework.stereotype.Service;
+import xinrui.cloud.domain.TechnologyFinancialAppointment;
+import xinrui.cloud.domain.dto.TechnologyFinancialAppointmentUserDto;
+import xinrui.cloud.dto.PageDto;
+
+import java.util.List;
+
+@Service
+public interface TechnologyFinancialAppointmentService extends BaseService<TechnologyFinancialAppointment> {
+
+    /**
+     * 根据科技金融对象id获取对应的所有预约人的详细信息
+     * @param id            {@link TechnologyFinancial#getId()}
+     * @param status        标识，0代表查找预约的，1代表查找未曾预约的
+     * @param currentPage   当前页码
+     * @param pageSize      一页大小
+     * @return
+     */
+    PageDto<List<TechnologyFinancialAppointmentUserDto>> listAppointmentBank(Long id, int status, int currentPage, int pageSize);
+
+    /**
+     * 处理预约的用户
+     * @param  bankId   预约对象的id
+     * @param bankId
+     */
+    void processAppointment(Long bankId);
+}

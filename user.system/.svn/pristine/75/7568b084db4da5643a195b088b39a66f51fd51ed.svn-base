@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+         maxBytesLocalHeap="500M" maxBytesLocalDisk="10G">
+    <!--
+            maxElementsInMemory为缓存对象的最大数目, eternal设置是否永远不过期
+            timeToIdleSeconds对象处于空闲状态的最多秒数 timeToLiveSeconds对象处于缓存状态的最多秒数
+            overflowToDisk如果内存中数据超过内存限制，是否要缓存到磁盘上 diskPersistent是否在磁盘上持久化。指重启JVM后，数据是否有效，默认为false
+            diskExpiryThreadIntervalSeconds 对象检测线程运行时间间隔。标识对象状态的线程多长时间运行一次。默认是120秒。（单位：秒）
+        -->
+    <diskStore path="user.dir/cache"/>
+
+    <defaultCache maxBytesLocalHeap="500M" eternal="true"
+                  timeToIdleSeconds="0" timeToLiveSeconds="0" overflowToDisk="true"/>
+
+    <cache name="org.hibernate.cache.internal.StandardQueryCache" eternal="false" timeToIdleSeconds="300"
+           timeToLiveSeconds="4200" overflowToDisk="true"/>
+
+    <cache name="org.hibernate.cache.spi.UpdateTimestampsCache"
+           eternal="true" timeToIdleSeconds="0"
+           timeToLiveSeconds="0" overflowToDisk="false"/>
+
+    <cache name="liuzhuomin.cloud.domain.Policy"/>
+    <cache name="liuzhuomin.cloud.domain.ProblemLimitInner"/>
+    <cache name="liuzhuomin.cloud.domain.PolicyActivity"/>
+    <cache name="liuzhuomin.cloud.domain.ProblemTrigger"/>
+    <cache name="liuzhuomin.cloud.domain.ProblemTriggerResult"/>
+    <cache name="liuzhuomin.cloud.domain.ProblemLimit"/>
+    <cache name="liuzhuomin.cloud.domain.PolicyGroup"/>
+    <cache name="liuzhuomin.cloud.domain.ProblemModel"/>
+    <cache name="liuzhuomin.cloud.domain.Problem"/>
+    <cache name="liuzhuomin.cloud.domain.ProblemTriggerInner"/>
+    <cache name="liuzhuomin.cloud.domain.PolicyTemplate"/>
+
+    <cache name="liuzhuomin.cloud.domain.Group"/>
+    <cache name="liuzhuomin.cloud.domain.Role"/>
+    <cache name="liuzhuomin.cloud.domain.User"/>
+
+</ehcache>
+
+
+
