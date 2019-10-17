@@ -1,6 +1,0 @@
-package liuzhuomin.cloud.service;
-
-import liuzhuomin.cloud.domain.PolicyParagraph;
-
-public interface PolicyParagraphService extends BaseService<PolicyParagraph> {
-}

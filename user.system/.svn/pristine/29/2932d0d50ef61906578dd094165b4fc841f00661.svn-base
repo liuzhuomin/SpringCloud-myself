@@ -1,7 +1,0 @@
-spring.profiles.active=local
-#spring.datasource.schema=classpath:baseInfoData.sql
-#相当于数据库创建表格等数据
-spring.datasource.schema=classpath:baseInfoTable.sql
-spring.datasource.data=classpath:baseInfoData.sql  
-spring.datasource.platform=mysql
-spring.datasource.separator=//

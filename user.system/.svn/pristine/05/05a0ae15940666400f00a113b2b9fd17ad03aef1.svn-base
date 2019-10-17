@@ -1,5 +1,0 @@
-spring.profiles.active=134
-zuul.ignore.urls=/authorization/**,**/swagger-ui.html/**,/static/**,/templates/**,/webjars/**,\
-  /swagger-resources/**,/**/v2/api-docs,/policy/**,**/swagger-resources/**
-
-

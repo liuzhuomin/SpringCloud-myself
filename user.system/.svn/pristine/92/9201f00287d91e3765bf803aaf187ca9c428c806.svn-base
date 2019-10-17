@@ -1,7 +1,0 @@
-package liuzhuomin.cloud.service;
-
-import liuzhuomin.cloud.domain.ProblemModel;
-
-public interface ProblemModelService extends BaseService<ProblemModel> {
-
-}

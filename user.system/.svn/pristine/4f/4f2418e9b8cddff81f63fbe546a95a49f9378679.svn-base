@@ -1,4 +1,0 @@
-package liuzhuomin.cloud.domain.Interfaces;
-public interface Nameable {
-	String getName();
-}

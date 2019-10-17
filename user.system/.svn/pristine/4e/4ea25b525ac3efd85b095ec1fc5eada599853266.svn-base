@@ -1,9 +1,0 @@
-package liuzhuomin.cloud.service;
-
-import liuzhuomin.cloud.domain.ProblemSimple;
-
-/**
- * 问题简单对象业务处理接口
- */
-public interface ProblemSimpleService extends BaseService<ProblemSimple> {
-}
