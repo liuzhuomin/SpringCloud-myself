@@ -43,7 +43,7 @@
         <spring-security-web.version>4.0.4.RELEASE</spring-security-web.version>
         <javax.action>1.1</javax.action>
         <javax.mail>1.4</javax.mail>
-        <commons.io>2.6</commons.io>
+        <commons.io>2.7</commons.io>
     </properties>
 
     <dependencies>
