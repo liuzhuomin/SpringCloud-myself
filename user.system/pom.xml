@@ -22,7 +22,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <guava.version>20.0</guava.version>
         <log4j.version>1.3.8.RELEASE</log4j.version>
-        <boot.version>1.5.9.RELEASE</boot.version>
+        <boot.version>2.5.12</boot.version>
         <commons.version>3.8.1</commons.version>
         <xinrui.cloud.version>1.0.0-SNAPSHOT</xinrui.cloud.version>
         <fastjson.version>1.2.47</fastjson.version>
