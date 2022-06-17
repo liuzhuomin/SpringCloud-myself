@@ -25,7 +25,7 @@
         <boot.version>1.5.9.RELEASE</boot.version>
         <commons.version>3.8.1</commons.version>
         <xinrui.cloud.version>1.0.0-SNAPSHOT</xinrui.cloud.version>
-        <fastjson.version>1.2.47</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <javax.persistence.version>1.0.1.Final</javax.persistence.version>
         <feign.verison>1.4.6.RELEASE</feign.verison>
         <ribbon.version>1.4.6.RELEASE</ribbon.version>
